@@ -139,9 +139,9 @@ This project is licensed under the **MIT License** — see the [LICENSE](LICENSE
 
 ## 👨‍💻 Developer
 
-**Abinbn** — [VawTech](https://vawtech.in)
+**Abinbn** — [VAW Technologies](https://VAW Technologies.in)
 
-- 🌐 Website: [vawtech.in/colorpicker](https://vawtech.in/colorpicker)
+- 🌐 Website: [VAW Technologies.in/colorpicker](https://VAW Technologies.in/colorpicker)
 - 💼 GitHub: [@abinbn](https://github.com/abinbn)
 
 ---

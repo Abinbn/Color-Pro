@@ -2,15 +2,71 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <!-- Instantly redirect to the website folder -->
-    <meta http-equiv="refresh" content="0; url=website/">
-    <title>Redirecting to Color Picker Pro...</title>
-    <script>
-        // Fallback JS redirect
-        window.location.replace("website/");
-    </script>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Color Picker Pro - Image Color Extractor</title>
+    <link rel="stylesheet" href="styles.css">
 </head>
-<body style="background-color: #0d0d14; color: #f1f5f9; font-family: sans-serif; text-align: center; padding-top: 50px;">
-    <p>Redirecting to <a href="website/" style="color: #6c63ff;">Color Picker Pro</a>...</p>
+<body>
+    <nav class="navbar">
+        <div class="nav-brand">
+            <svg width="24" height="24" viewBox="0 0 24 24" fill="none">
+                <circle cx="12" cy="12" r="10" stroke="#6c63ff" stroke-width="2"/>
+                <circle cx="12" cy="12" r="6" fill="#6c63ff"/>
+                <circle cx="12" cy="12" r="2.5" fill="#fff"/>
+            </svg>
+            Color Picker Pro
+        </div>
+        <div class="nav-links">
+            <a href="https://github.com/Abinbn/Color-Pro" target="_blank">GitHub</a>
+        </div>
+    </nav>
+
+    <main class="container">
+        <header class="hero">
+            <h1>Extract Colors from Any Image</h1>
+            <p>Upload an image to instantly analyze it pixel-by-pixel. We extract the dominant color palette in hierarchical order (most frequent colors first). Everything is processed locally in your browser.</p>
+        </header>
+
+        <section class="upload-section">
+            <div class="upload-area" id="uploadArea">
+                <input type="file" id="imageInput" accept="image/png, image/jpeg, image/webp" hidden>
+                <div class="upload-content">
+                    <svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"/>
+                        <circle cx="8.5" cy="8.5" r="1.5"/>
+                        <polyline points="21 15 16 10 5 21"/>
+                    </svg>
+                    <p>Click or drag an image here to extract colors</p>
+                    <button class="primary-btn" onclick="document.getElementById('imageInput').click()">Browse Image</button>
+                </div>
+                <img id="imagePreview" class="image-preview" hidden>
+            </div>
+        </section>
+
+        <section class="results-section" id="resultsSection" hidden>
+            <div class="results-header">
+                <h2>Dominant Color Palette</h2>
+                <span id="colorCount">Analyzing...</span>
+            </div>
+            <div class="palette-grid" id="paletteGrid">
+                <!-- Color swatches will be injected here -->
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-content">
+            <p>&copy; 2026 Color Picker Pro by <a href="https://VAW Technologies.in" target="_blank">VAW Technologies</a> (Abinbn)</p>
+            <div class="footer-links">
+                <a href="privacy/">Privacy Policy</a>
+                <a href="terms/">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+    <!-- Toast for copy notification -->
+    <div id="toast" class="toast">Copied to clipboard</div>
+
+    <script src="script.js"></script>
 </body>
 </html>

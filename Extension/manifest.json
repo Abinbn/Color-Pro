@@ -4,7 +4,7 @@
   "short_name": "ColorPicker",
   "version": "2.0.0",
   "description": "Pick any color on screen, convert between HEX/RGB/HSL, manage custom palettes, and float a draggable swatch widget on any page. Built for designers and developers.",
-  "homepage_url": "https://vawtech.in/colorpicker",
+  "homepage_url": "https://github.com/Abinbn",
   "permissions": ["storage", "clipboardWrite", "scripting", "activeTab", "tabs"],
   "action": {
     "default_popup": "popup.html",
