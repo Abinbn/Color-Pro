@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Color Picker Pro</title>
+    <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+
+<!-- ── Toast ── -->
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+
+<!-- ══════════════════════════════════════════════
+     MAIN VIEW
+══════════════════════════════════════════════ -->
+<div id="mainView" class="view">
+
+    <header class="app-header">
+        <h1 class="app-title">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                <circle cx="12" cy="12" r="10" stroke="currentColor" stroke-width="2"/>
+                <circle cx="12" cy="12" r="4" fill="currentColor"/>
+            </svg>
+            Color Picker
+        </h1>
+        <div class="header-btns">
+            <!-- EyeDropper (Material "colorize" icon) -->
+            <button id="eyedropperBtn" class="icon-btn" title="Pick color from screen (Ctrl+Shift+E)" style="display:none" aria-label="Pick color from screen">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                    <path d="M20.71 5.63l-2.34-2.34a1 1 0 0 0-1.41 0l-3.12 3.12-1.93-1.91-1.42 1.42 1.41 1.41L3 16.25V21h4.75l8.92-8.92 1.41 1.41 1.42-1.42-1.92-1.92 3.12-3.12a1 1 0 0 0 0-1.4zM6.92 19H5v-1.92l7.06-7.06 1.92 1.92L6.92 19z"/>
+                </svg>
+            </button>
+            <!-- Float widget on page -->
+            <button id="floatBtn" class="icon-btn" title="Pin floating swatch to page" aria-label="Float color widget on page">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M15 3h6v6M9 21H3v-6M21 3l-7 7M3 21l7-7"/>
+                </svg>
+            </button>
+            <!-- Minimize popup -->
+            <button id="collapseBtn" class="icon-btn" title="Minimize (shrinks popup)" aria-label="Minimize popup">
+                <svg id="collapseIcon" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="4 14 10 14 10 20"/>
+                    <polyline points="20 10 14 10 14 4"/>
+                    <line x1="10" y1="14" x2="21" y2="3"/>
+                    <line x1="3" y1="21" x2="14" y2="10"/>
+                </svg>
+            </button>
+            <!-- Settings -->
+            <button id="settingsBtn" class="icon-btn" title="Settings" aria-label="Open settings">
+                <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <circle cx="12" cy="12" r="3"/>
+                    <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+                </svg>
+            </button>
+        </div>
+    </header>
+
+    <div id="mainContent">
+
+        <!-- Color Preview -->
+        <section class="color-preview-section">
+            <label for="defaultColorPicker" class="color-preview-strip" id="colorPreview" title="Click to open color picker"></label>
+            <div class="color-code-row">
+                <input type="text" id="colorCodeInput" value="#FFFFFF" spellcheck="false" autocomplete="off" aria-label="Color value">
+                <button id="copyColorBtn" class="icon-btn copy-btn" title="Copy color (Ctrl+Shift+K)" aria-label="Copy color code"></button>
+            </div>
+            <div class="format-switcher" role="group" aria-label="Color format">
+                <button class="format-btn active" data-format="hex">HEX</button>
+                <button class="format-btn" data-format="rgb">RGB</button>
+                <button class="format-btn" data-format="hsl">HSL</button>
+            </div>
+        </section>
+
+        <input type="color" id="defaultColorPicker" value="#ffffff" aria-label="Native color picker">
+
+        <!-- Recent Colors (collapsed by default) -->
+        <section class="cp-section" id="recentSection">
+            <div class="cp-section-header" role="button" tabindex="0" aria-expanded="false" aria-controls="recentBody">
+                <span class="cp-section-title">Recent</span>
+                <div class="cp-section-right">
+                    <button id="clearHistoryBtn" class="text-btn danger">Clear all</button>
+                    <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                        <polyline points="6 9 12 15 18 9"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="cp-section-body" id="recentBody" aria-hidden="true">
+                <div id="colorHistory" class="color-grid"></div>
+                <p id="historyEmpty" class="empty-state" hidden>Pick a color to build history.</p>
+            </div>
+        </section>
+
+        <!-- Palettes (collapsed by default) -->
+        <section class="cp-section" id="palettesSection">
+            <div class="cp-section-header" role="button" tabindex="0" aria-expanded="false" aria-controls="palettesBody">
+                <span class="cp-section-title">Palettes</span>
+                <svg class="chevron" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <polyline points="6 9 12 15 18 9"/>
+                </svg>
+            </div>
+            <div class="cp-section-body" id="palettesBody" aria-hidden="true">
+                <div class="palette-creator">
+                    <input type="text" id="paletteName" placeholder="New palette name…" aria-label="Palette name" maxlength="32">
+                    <button id="createPaletteBtn" class="primary-btn">
+                        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                            <line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/>
+                        </svg>
+                        Create
+                    </button>
+                </div>
+                <div id="customPalettes" class="custom-palettes"></div>
+            </div>
+        </section>
+
+    </div>
+</div>
+
+
+<!-- ══════════════════════════════════════════════
+     SETTINGS VIEW  (replaces main, does NOT stack)
+══════════════════════════════════════════════ -->
+<div id="settingsView" class="view" hidden>
+
+    <header class="settings-header">
+        <button id="backBtn" class="back-btn" aria-label="Back to main">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                <polyline points="15 18 9 12 15 6"/>
+            </svg>
+        </button>
+        <span class="settings-title">Settings</span>
+    </header>
+
+    <!-- Single scrollable settings page -->
+    <div class="settings-body">
+
+        <!-- ── Preferences ── -->
+        <p class="s-section-label">Preferences</p>
+
+        <div class="pref-card">
+            <label class="pref-label">Default Color Format</label>
+            <div class="pref-radio-group">
+                <label class="pref-radio"><input type="radio" name="defFmt" value="hex" checked> HEX</label>
+                <label class="pref-radio"><input type="radio" name="defFmt" value="rgb"> RGB</label>
+                <label class="pref-radio"><input type="radio" name="defFmt" value="hsl"> HSL</label>
+            </div>
+        </div>
+
+        <div class="pref-card">
+            <label class="pref-label" for="historyLimitSel">History Limit</label>
+            <select id="historyLimitSel" class="pref-select">
+                <option value="5">5 colors</option>
+                <option value="10" selected>10 colors</option>
+                <option value="15">15 colors</option>
+                <option value="20">20 colors</option>
+            </select>
+        </div>
+
+        <div class="pref-card">
+            <div class="toggle-row">
+                <div>
+                    <span class="pref-label mb0">Auto-copy on pick</span>
+                    <p class="pref-hint">Copy to clipboard when a color is picked.</p>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="autoCopyToggle">
+                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                </label>
+            </div>
+            <div class="toggle-row mt8">
+                <div>
+                    <span class="pref-label mb0">Show copy toast</span>
+                    <p class="pref-hint">Show notification when color is copied.</p>
+                </div>
+                <label class="toggle">
+                    <input type="checkbox" id="confirmCopyToggle" checked>
+                    <span class="toggle-track"><span class="toggle-thumb"></span></span>
+                </label>
+            </div>
+        </div>
+
+        <!-- ── Keyboard Shortcuts ── -->
+        <p class="s-section-label">Keyboard Shortcuts</p>
+
+        <div class="pref-card">
+            <div id="shortcutsList" class="shortcuts-list">
+                <!-- populated by JS -->
+            </div>
+            <button id="editShortcutsBtn" class="shortcut-edit-btn">
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/>
+                    <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/>
+                </svg>
+                Customize shortcuts
+            </button>
+        </div>
+
+        <!-- ── Quick Links ── -->
+        <p class="s-section-label">Legal</p>
+
+        <div class="pref-card links-card">
+            <a class="settings-link ext-link" href="https://vawtech.in/colorpicker/privacy">
+                Privacy Policy
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+            <a class="settings-link ext-link" href="https://vawtech.in/colorpicker/terms">
+                Terms of Service
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+            </a>
+        </div>
+
+        <!-- ── About ── -->
+        <p class="s-section-label">About</p>
+
+        <div class="about-card">
+            <div class="about-top">
+                <svg class="about-icon" width="36" height="36" viewBox="0 0 24 24" fill="none" aria-hidden="true">
+                    <circle cx="12" cy="12" r="10" stroke="#6c63ff" stroke-width="2"/>
+                    <circle cx="12" cy="12" r="6" fill="#6c63ff"/>
+                    <circle cx="12" cy="12" r="2.5" fill="#fff"/>
+                </svg>
+                <div class="about-text">
+                    <span class="about-name">Color Picker Pro</span>
+                    <span class="about-meta">v2.0.0 · by Abinbn · VawTech</span>
+                </div>
+            </div>
+
+            <div class="badges-row">
+                <a class="bdg ext-link" href="https://github.com/Abinbn/Color-Pro" aria-label="Star on GitHub">
+                    <span class="bdg-l">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2C6.477 2 2 6.484 2 12.017c0 4.425 2.865 8.18 6.839 9.504.5.092.682-.217.682-.483 0-.237-.008-.868-.013-1.703-2.782.605-3.369-1.343-3.369-1.343-.454-1.158-1.11-1.466-1.11-1.466-.908-.62.069-.608.069-.608 1.003.07 1.531 1.032 1.531 1.032.892 1.53 2.341 1.088 2.91.832.092-.647.35-1.088.636-1.338-2.22-.253-4.555-1.113-4.555-4.951 0-1.093.39-1.988 1.029-2.688-.103-.253-.446-1.272.098-2.65 0 0 .84-.27 2.75 1.026A9.564 9.564 0 0 1 12 6.844a9.59 9.59 0 0 1 2.504.337c1.909-1.296 2.747-1.027 2.747-1.027.546 1.379.202 2.398.1 2.651.64.7 1.028 1.595 1.028 2.688 0 3.848-2.339 4.695-4.566 4.943.359.309.678.92.678 1.855 0 1.338-.012 2.419-.012 2.747 0 .268.18.58.688.482A10.019 10.019 0 0 0 22 12.017C22 6.484 17.522 2 12 2z"/></svg>
+                        GitHub
+                    </span>
+                    <span class="bdg-r github">Star</span>
+                </a>
+                <a class="bdg ext-link" href="https://twitter.com/abinbn" aria-label="Follow on X/Twitter">
+                    <span class="bdg-l">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/></svg>
+                        Twitter
+                    </span>
+                    <span class="bdg-r twitter">Follow</span>
+                </a>
+                <a class="bdg ext-link" href="https://vawtech.in/colorpicker" aria-label="Visit website">
+                    <span class="bdg-l">
+                        <svg width="11" height="11" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="12" r="10"/><line x1="2" y1="12" x2="22" y2="12"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10z"/></svg>
+                        Website
+                    </span>
+                    <span class="bdg-r site">Visit</span>
+                </a>
+            </div>
+        </div>
+
+    </div><!-- /.settings-body -->
+</div><!-- /#settingsView -->
+
+<script src="popup.js"></script>
+</body>
+</html>
