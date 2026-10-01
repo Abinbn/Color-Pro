@@ -3,7 +3,7 @@
   "name": "Color Picker Pro",
   "short_name": "ColorPicker",
   "version": "2.0.0",
-  "description": "Pick any color on screen, convert between HEX/RGB/HSL, manage custom palettes, and float a draggable swatch widget on any page. Built for designers and developers.",
+  "description": "Pick colors from web pages, convert HEX/RGB/HSL, and build custom palettes easily. A sleek offline tool for developers.",
   "homepage_url": "https://github.com/Abinbn",
   "permissions": ["storage", "clipboardWrite", "scripting", "activeTab", "tabs"],
   "action": {
