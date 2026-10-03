@@ -2,9 +2,11 @@
 
 > A sleek, powerful Chrome extension for designers and developers — pick any color, convert formats, manage palettes, and float a draggable swatch widget on any page.
 
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/placeholder?label=Chrome%20Web%20Store&logo=google-chrome&logoColor=white&color=6c63ff)](https://chrome.google.com/webstore)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/placeholder?label=Chrome%20Web%20Store&logo=google-chrome&logoColor=white&color=6c63ff)](https://chromewebstore.google.com/detail/impebaenajlpnpclnbmkckdibikelgfk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](manifest.json)
+
+
 
 ---
 
