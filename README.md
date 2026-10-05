@@ -2,9 +2,14 @@
 
 > A sleek, powerful Chrome extension for designers and developers — pick any color, convert formats, manage palettes, and float a draggable swatch widget on any page.
 
-[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/placeholder?label=Chrome%20Web%20Store&logo=google-chrome&logoColor=white&color=6c63ff)](https://chromewebstore.google.com/detail/impebaenajlpnpclnbmkckdibikelgfk)
+[![Chrome Web Store](https://img.shields.io/chrome-web-store/v/placeholder?label=Chrome%20Web%20Store&logo=google-chrome&logoColor=white&color=6c63ff)](https://chromewebstore.google.com/detail/color-picker-pro/impebaenajlpnpclnbmkckdibikelgfk)
 [![License: MIT](https://img.shields.io/badge/License-MIT-green.svg)](LICENSE)
 [![Version](https://img.shields.io/badge/version-2.0.0-blue.svg)](manifest.json)
+![Website](https://img.shields.io/website?url=https%3A%2F%2Fabinbn.github.io%2FColor-Pro)
+
+
+
+
 
 
 
